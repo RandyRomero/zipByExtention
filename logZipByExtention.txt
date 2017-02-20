@@ -1,0 +1,9 @@
+Program has started.
+Type in path to directory to zip: 
+Path to direcory to zip is: 
+D:\YandexDisk\Studies\Python\Chapter 9\zipByExtention\zipByExtention.py
+It should be folder, not a file.
+Type in path to directory to zip: 
+Path to direcory to zip is: 
+D:\YandexDisk\Studies\Python\Chapter 9\zipByExtention
+Ok, this directory exists.

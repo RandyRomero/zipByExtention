@@ -16,10 +16,23 @@ logFile = open('D:\\YandexDisk\\Studies\\Python\\Chapter 9\\zipByExtention\\logZ
 
 logFile.write('Program has started.\n')
 
+########## ask user about path to work and check it #####################
+
 while True:
 	logFile.write('Type in path to directory to zip: \n')
 	pathToSearch = input('Type in path to directory to zip: \n')
-	logFile.write('Path to direcory to zip is: \n' + pathToSearch + '\n')
-	
+	if os.path.exists(pathToSearch):
+		if os.path.isdir(pathToSearch):
+			print('Ok, this directory exists.\n')
+			logFile.write('Path to direcory to zip accepted: \n' + pathToSearch + '\n')
+			break
+		else:
+			print('It should be folder, not a file.\n')	
+			logFile.write('It should be folder, not a file.\n')	
+			continue
+	else:
+		print('There is no such directory. Try again.')	
+		logFile.write('There is no such directory. Try again.\n')	
+
 
 logFile.close()	
