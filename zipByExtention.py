@@ -35,6 +35,8 @@ while True:
 		logFile.write('There is no such directory. Try again.\n')	
 
 
+############# ask user about which files he wants to zip #############
+
 while True:
 	answer1 = input('Would you like (1) to zip file with certanin extentions or (2) to zip all files except files with certain extention? Your answer is: ')
 	logFIle.write('Would you like (1) to zip file with certanin extentions or (2) to zip all files except files with certain extention? Your answer is: ')
