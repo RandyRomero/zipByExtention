@@ -4,9 +4,16 @@
 
 import os, re, shutil, sys, zipfile
 
-#def askUserExt():
-
 #def lookingForFiles(path):
+
+#def askWithExt():
+
+#def addWithoutExt():
+
+#def statistics():
+
+#def zipFiles():
+
 
 def addExt():
 	answer2 = ''
@@ -32,7 +39,6 @@ def addExt():
 			print('\n' + answer2 + ' it is not appropriate extention or command. Try again.')	
 
 
-#def addWithoutExt(filepath)
 
 logFile = open('D:\\logZipByExtention.txt', 'w')
 
@@ -64,11 +70,17 @@ while True:
 	logFile.write('Would you like (1) to zip file with certain extentions or (2) to zip all files except files with these extentions? Your answer is: ')
 	if answer1 == '1':
 		extList = addExt()
-		#zip certain extentions
+		#return all files from path - return list with path to these files
+		#add to list only file with users' extentions
+		#print some statistics of number and size of files
+		#put files in archive
 		break
 	elif answer1 == '2':
-		#add extentions
-		#zip files except files with this extention
+		extList = addExt()
+		#return files from path
+		#add to list all files except from these with users' extentions - return list with path to these files
+		#print some statistics of number and size of files
+		#put files in archive
 		break
 	else:
 		print('Input error. You should type only 1 or 2. Try again.')
