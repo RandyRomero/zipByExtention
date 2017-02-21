@@ -4,8 +4,17 @@
 
 import os, re, shutil, sys, zipfile
 
-#def lookingForFiles(pathToSearchh):
-#	for 
+def lookingForFiles(pathToSearch):
+	allFiles = []
+	for folderName, subfolders, fileNames in os.walk(pathToSearch):
+		for file in fileNames:
+			if file.startswith('~$'):
+				continue
+			allFiles.append(os.path.join(folderName, file))
+	
+	for item in allFiles:
+		print(item)		
+
 
 
 #def addWithExt():
@@ -23,7 +32,7 @@ def addExt():
 	while True:
 		answer2 = input('\nType here an extention.\nWhen you are done, type "d" and press enter.\nIf you want to exit, type "e" and press enter: ')
 		logFile.write('Ask user for extention or a command.\n')
-		if answer2 == 'd' and len(extList) > 1:
+		if answer2 == 'd' and len(extList) > 0:
 			print('Thank you. Start to sort files out')
 			logFile.write('User done to add extentions. List of extentions containts ' + str(len(extList)) + ' items.')
 			break
@@ -45,7 +54,7 @@ def addExt():
 			logFile.close()
 			sys.exit()	
 		else:
-			print('\n' + answer2 + ' it is not appropriate extention or command. Try again.')
+			print('\n' + answer2 + ' is not appropriate extention or command. Try again.')
 			logFile.write('Got an appropriate answer: ' + answer2 + '\n')
 			continue
 
