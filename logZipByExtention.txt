@@ -1,9 +1,5 @@
 Program has started.
 Type in path to directory to zip: 
-Path to direcory to zip is: 
-D:\YandexDisk\Studies\Python\Chapter 9\zipByExtention\zipByExtention.py
-It should be folder, not a file.
-Type in path to directory to zip: 
-Path to direcory to zip is: 
-D:\YandexDisk\Studies\Python\Chapter 9\zipByExtention
-Ok, this directory exists.
+Path to direcory to zip accepted: 
+D:\YandexDisk\Studies\Python\Chapter 9
+Would you like (1) to zip file with certain extentions or (2) to zip all files except files with these extentions? Your answer is: 

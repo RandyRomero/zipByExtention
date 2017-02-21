@@ -2,13 +2,30 @@
 
 '''Program that ask user which type of files he wants to archive (by extention), ask for path and go through this path looking for every file with these extentions. Also user should denote if he wants to archive files with these extentions of all other files except files with these extentions'''
 
-import os, shutil, zipfile
+import os, re, shutil, zipfile
 
 #def askUserExt():
 
 #def lookingForFiles(path):
 
-#def addExt(filepath):
+def addExt():
+	answer2 = ''
+	extList = []
+	while True:
+		extention = input('Type here an extention. If you want to exit, type "n" and press enter: . \nYou answer is ')
+		if answer2 == 'n' and len(extList) > 1:
+			print('Thank you. Start to sort files out')
+			break
+		elif answer2 == 'n' and len(extList) < 0:
+			print('You didn\'t add any extantion. Please add at least one or press "n" to exit')
+			continue
+		elif answer2.search(r'\.\w{2,4}').group() != None:
+			extList.append(extention)
+			print('Extention ' + extention + ' was added. There are these extention to look for now: ')
+			for i in extList:
+				print('- ' + i)
+			continue
+
 
 #def addWithoutExt(filepath)
 
@@ -38,10 +55,10 @@ while True:
 ############# ask user about which files he wants to zip #############
 
 while True:
-	answer1 = input('Would you like (1) to zip file with certanin extentions or (2) to zip all files except files with certain extention? Your answer is: ')
-	logFIle.write('Would you like (1) to zip file with certanin extentions or (2) to zip all files except files with certain extention? Your answer is: ')
+	answer1 = input('Would you like (1) to zip files with certain extentions or (2) to zip all files except files with these extentions? Your answer is: ')
+	logFile.write('Would you like (1) to zip file with certain extentions or (2) to zip all files except files with these extentions? Your answer is: ')
 	if answer1 == '1':
-		#add extentions
+		extList = addExt()
 		#zip certain extentions
 		break
 	elif answer1 == '2':
@@ -54,3 +71,5 @@ while True:
 
 
 logFile.close()	
+
+#(\.\w{2,4})
