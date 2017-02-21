@@ -4,9 +4,11 @@
 
 import os, re, shutil, sys, zipfile
 
-#def lookingForFiles(path):
+#def lookingForFiles(pathToSearchh):
+#	for 
 
-#def askWithExt():
+
+#def addWithExt():
 
 #def addWithoutExt():
 
@@ -20,23 +22,32 @@ def addExt():
 	extList = []
 	while True:
 		answer2 = input('\nType here an extention.\nWhen you are done, type "d" and press enter.\nIf you want to exit, type "e" and press enter: ')
+		logFile.write('Ask user for extention or a command.\n')
 		if answer2 == 'd' and len(extList) > 1:
 			print('Thank you. Start to sort files out')
+			logFile.write('User done to add extentions. List of extentions containts ' + str(len(extList)) + ' items.')
 			break
 		elif answer2 == 'd' and len(extList) <= 0:
 			print('You didn\'t add any extesntion. Please add at least one or press "exit" to exit')
+			logFile.write('User press "d" but list of extentions is empty\n' )
 			continue
 		elif re.search(r'^\w{2,4}$', answer2) != None:
 			extList.append(answer2)
 			print('Extention ' + answer2 + ' was added. There are these extention to look for now: ')
+			logFile.write('Extention ' + answer2 + ' was added. There are these extention to look for now: \n')
 			for i in extList:
 				print('- ' + i)
+				logFile.write('- ' + i + '\n')
 			continue
 		elif answer2 == 'e':
 			print('Goodbye')
+			logFile.write('User press "e". Program is going to shut down.\n')
+			logFile.close()
 			sys.exit()	
 		else:
-			print('\n' + answer2 + ' it is not appropriate extention or command. Try again.')	
+			print('\n' + answer2 + ' it is not appropriate extention or command. Try again.')
+			logFile.write('Got an appropriate answer: ' + answer2 + '\n')
+			continue
 
 
 
@@ -67,9 +78,11 @@ while True:
 
 while True:
 	answer1 = input('Would you like to \n - (1) zip files with certain extentions \n or \n - (2) zip all files except files with these extentions?\nYour answer is: ')
-	logFile.write('Would you like (1) to zip file with certain extentions or (2) to zip all files except files with these extentions? Your answer is: ')
+	logFile.write('Would you like to \n - (1) zip files with certain extentions \n or \n - (2) zip all files except files with these extentions?\nYour answer is: \n')
 	if answer1 == '1':
 		extList = addExt()
+		allFiles = lookingForFiles(pathToSearch)
+
 		#return all files from path - return list with path to these files
 		#add to list only file with users' extentions
 		#print some statistics of number and size of files
