@@ -4,13 +4,15 @@
 
 import os, re, shutil, sys, zipfile
 
-def lookingForFiles(pathToSearch):
+def lookingForFiles(pathToSearch, extList):
 	allFiles = []
 	for folderName, subfolders, fileNames in os.walk(pathToSearch):
 		for file in fileNames:
 			if file.startswith('~$'):
 				continue
-			allFiles.append(os.path.join(folderName, file))
+			elif file.endswith(extList):
+			#endwith supports tupples! awesome!	
+				allFiles.append(os.path.join(folderName, file))
 	
 	for item in allFiles:
 		print(item)		
@@ -58,7 +60,7 @@ def addExt():
 			logFile.write('Got an appropriate answer: ' + answer2 + '\n')
 			continue
 
-
+	return tuple(extList)
 
 logFile = open('D:\\logZipByExtention.txt', 'w')
 
@@ -90,7 +92,7 @@ while True:
 	logFile.write('Would you like to \n - (1) zip files with certain extentions \n or \n - (2) zip all files except files with these extentions?\nYour answer is: \n')
 	if answer1 == '1':
 		extList = addExt()
-		allFiles = lookingForFiles(pathToSearch)
+		allFiles = lookingForFiles(pathToSearch, extList)
 
 		#return all files from path - return list with path to these files
 		#add to list only file with users' extentions
