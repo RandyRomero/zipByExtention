@@ -17,7 +17,15 @@ def lookingForFiles(pathToSearch):
 			
 	return allFiles
 
-#def addWithExt():
+def sortWithExt(allFiles, extList):
+	logFile.write('\nStart to sort out files with urers\' extentions\n')
+	filesWithExt = []
+	for file in allFiles:
+		if file.endswith(extList):
+			filesWithExt.append(file)
+
+	for item in filesWithExt:
+		logFile.write(item + '\n')		
 
 #def addWithoutExt():
 
@@ -91,7 +99,7 @@ while True:
 	if answer1 == '1':
 		extList = addExt()
 		allFiles = lookingForFiles(pathToSearch)
-
+		filesWithExt = sortWithExt(allFiles, extList)
 		#return all files from path - return list with path to these files
 		#add to list only file with users' extentions
 		#print some statistics of number and size of files
