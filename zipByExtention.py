@@ -12,16 +12,16 @@ def addExt():
 	answer2 = ''
 	extList = []
 	while True:
-		extention = input('Type here an extention. If you want to exit, type "n" and press enter: . \nYou answer is ')
+		answer2 = input('Type here an extention. If you want to exit, type "n" and press enter: . \nYou answer is ')
 		if answer2 == 'n' and len(extList) > 1:
 			print('Thank you. Start to sort files out')
 			break
-		elif answer2 == 'n' and len(extList) < 0:
+		elif answer2 == 'n' and len(extList) <= 0:
 			print('You didn\'t add any extantion. Please add at least one or press "n" to exit')
 			continue
-		elif answer2.search(r'\.\w{2,4}').group() != None:
-			extList.append(extention)
-			print('Extention ' + extention + ' was added. There are these extention to look for now: ')
+		elif re.search(r'^\w{2,4}$', answer2) != None:
+			extList.append(answer2)
+			print('Extention ' + answer2 + ' was added. There are these extention to look for now: ')
 			for i in extList:
 				print('- ' + i)
 			continue
@@ -29,7 +29,7 @@ def addExt():
 
 #def addWithoutExt(filepath)
 
-logFile = open('D:\\YandexDisk\\Studies\\Python\\Chapter 9\\zipByExtention\\logZipByExtention.txt', 'w')
+logFile = open('D:\\logZipByExtention.txt', 'w')
 
 logFile.write('Program has started.\n')
 
