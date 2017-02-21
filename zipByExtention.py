@@ -35,4 +35,20 @@ while True:
 		logFile.write('There is no such directory. Try again.\n')	
 
 
+while True:
+	answer1 = input('Would you like (1) to zip file with certanin extentions or (2) to zip all files except files with certain extention? Your answer is: ')
+	logFIle.write('Would you like (1) to zip file with certanin extentions or (2) to zip all files except files with certain extention? Your answer is: ')
+	if answer1 == '1':
+		#add extentions
+		#zip certain extentions
+		break
+	elif answer1 == '2':
+		#add extentions
+		#zip files except files with this extention
+		break
+	else:
+		print('Input error. You should type only 1 or 2. Try again.')
+		continue	
+
+
 logFile.close()	
