@@ -14,11 +14,12 @@ def lookingForFiles(pathToSearch):
 				continue
 			else:
 				size = os.path.getsize(os.path.join(folderName, file))
-				totalSize += size 
+				totalSize += size
 				allFiles.append(os.path.join(folderName, file))
 				logFile.write(os.path.join(folderName, file) + '\n')
 
-	print('There is ' + str(len(allFiles)) + ' with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1204)) + ' MB.\n')
+	print('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n')
+	logFile.write('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n\n')
 			
 	return allFiles
 
