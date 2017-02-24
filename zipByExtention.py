@@ -7,13 +7,18 @@ import os, re, shutil, sys, zipfile
 def lookingForFiles(pathToSearch):
 	logFile.write('There are these files in:\n' + pathToSearch + '\n')
 	allFiles = []
+	totalSize = 0
 	for folderName, subfolders, fileNames in os.walk(pathToSearch):
 		for file in fileNames:
 			if file.startswith('~$'):
 				continue
 			else:
+				size = os.path.getsize(os.path.join(folderName, file))
+				totalSize += size 
 				allFiles.append(os.path.join(folderName, file))
 				logFile.write(os.path.join(folderName, file) + '\n')
+
+	print('There is ' + str(len(allFiles)) + ' with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1204)) + ' MB.\n')
 			
 	return allFiles
 
@@ -68,7 +73,7 @@ def addExt():
 
 	return tuple(extList)
 
-logFile = open('D:\\logZipByExtention.txt', 'w')
+logFile = open('.\\logZipByExtention.txt', 'w')
 
 logFile.write('Program has started.\n')
 
@@ -91,6 +96,8 @@ while True:
 		logFile.write('There is no such directory. Try again.\n')	
 
 
+allFiles = lookingForFiles(pathToSearch)
+
 ############# ask user about which files he wants to zip #############
 
 while True:
@@ -98,7 +105,6 @@ while True:
 	logFile.write('Would you like to \n - (1) zip files with certain extentions \n or \n - (2) zip all files except files with these extentions?\nYour answer is: \n')
 	if answer1 == '1':
 		extList = addExt()
-		allFiles = lookingForFiles(pathToSearch)
 		filesWithExt = sortWithExt(allFiles, extList)
 		#return all files from path - return list with path to these files
 		#add to list only file with users' extentions
@@ -107,7 +113,6 @@ while True:
 		break
 	elif answer1 == '2':
 		extList = addExt()
-		allFiles = lookingForFiles(pathToSearch)
 		#add to list all files except from these with users' extentions - return list with path to these files
 		#print some statistics of number and size of files
 		#put files in archive
