@@ -21,7 +21,7 @@ def lookingForFiles(pathToSearch):
 	print('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n')
 	logFile.write('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n\n')
 			
-	return allFiles
+	return allFiles #list of all files including files in subfolders
 
 def sortWithExt(allFiles, extList):
 	logFile.write('\nStart to sort out files with urers\' extentions\n')
