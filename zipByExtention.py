@@ -9,6 +9,9 @@ def lookingForFiles(pathToSearch):
 	allFiles = []
 	totalSize = 0
 	for folderName, subfolders, fileNames in os.walk(pathToSearch):
+		filesNames = [f for f in fileNames if not f[0] == '.'] #don't add jidden files
+		subfolders[:] = [s for s in subfolders if not s[0] == '.']
+
 		for file in fileNames:
 			if file.startswith('~$'):
 				continue
@@ -44,7 +47,7 @@ def sortByExt(allFiles, extList, withOrWithout):
 		else:
 			filesWithoutExt.append(file)	
 	
-	if withOrWithout == True:
+	if withOrWithout: #if it is True
 		withOrWithoutWord = 'with'
 		countAndPrintSorted(filesWithExt, withOrWithoutWord)
 		return filesWithExt
@@ -52,8 +55,6 @@ def sortByExt(allFiles, extList, withOrWithout):
 		withOrWithoutWord = 'without'
 		countAndPrintSorted(filesWithoutExt, withOrWithoutWord)
 		return filesWithoutExt
-
-#def statistics():
 
 #def zipFiles():
 
