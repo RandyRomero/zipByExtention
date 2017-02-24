@@ -23,17 +23,35 @@ def lookingForFiles(pathToSearch):
 			
 	return allFiles #list of all files including files in subfolders
 
-def sortWithExt(allFiles, extList):
+def countAndPrintSorted(filesToCount, withOrWithoutWord):
+	totalSize = 0
+
+	for item in filesToCount:
+		size = os.path.getsize(item)
+		totalSize += size
+		logFile.write(item + '\n')
+
+	print('There are ' + str(len(filesToCount)) + ' files ' + withOrWithoutWord + ' your extentions with total size of ' + str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n')
+	logFile.write('There are ' + str(len(filesToCount)) + ' files ' + withOrWithoutWord + ' your extentions with total size of ' + str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n\n')	
+
+def sortByExt(allFiles, extList, withOrWithout):
 	logFile.write('\nStart to sort out files with urers\' extentions\n')
 	filesWithExt = []
+	filesWithoutExt = []
 	for file in allFiles:
 		if file.endswith(extList):
 			filesWithExt.append(file)
-
-	for item in filesWithExt:
-		logFile.write(item + '\n')		
-
-#def addWithoutExt():
+		else:
+			filesWithoutExt.append(file)	
+	
+	if withOrWithout == True:
+		withOrWithoutWord = 'with'
+		countAndPrintSorted(filesWithExt, withOrWithoutWord)
+		return filesWithExt
+	else:
+		withOrWithoutWord = 'without'
+		countAndPrintSorted(filesWithoutExt, withOrWithoutWord)
+		return filesWithoutExt
 
 #def statistics():
 
@@ -47,7 +65,7 @@ def addExt():
 		answer2 = input('\nType here an extention.\nWhen you are done, type "d" and press enter.\nIf you want to exit, type "e" and press enter: ')
 		logFile.write('Ask user for extention or a command.\n')
 		if answer2 == 'd' and len(extList) > 0:
-			print('Thank you. Start to sort files out')
+			print('\nThank you. Start to sort files out')
 			logFile.write('User done to add extentions. List of extentions containts ' + str(len(extList)) + ' items.')
 			break
 		elif answer2 == 'd' and len(extList) <= 0:
@@ -105,15 +123,16 @@ while True:
 	answer1 = input('Would you like to \n - (1) zip files with certain extentions \n or \n - (2) zip all files except files with these extentions?\nYour answer is: ')
 	logFile.write('Would you like to \n - (1) zip files with certain extentions \n or \n - (2) zip all files except files with these extentions?\nYour answer is: \n')
 	if answer1 == '1':
-		extList = addExt()
-		filesWithExt = sortWithExt(allFiles, extList)
 		#return all files from path - return list with path to these files
+		extList = addExt()
+		filesByExt = sortByExt(allFiles, extList, True)
 		#add to list only file with users' extentions
-		#print some statistics of number and size of files
+		
 		#put files in archive
 		break
 	elif answer1 == '2':
 		extList = addExt()
+		filesByExt = sortByExt(allFiles, extList, False)
 		#add to list all files except from these with users' extentions - return list with path to these files
 		#print some statistics of number and size of files
 		#put files in archive
