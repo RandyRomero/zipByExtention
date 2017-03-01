@@ -10,7 +10,7 @@ def lookingForFiles(pathToSearch):
 	totalSize = 0
 	for folderName, subfolders, fileNames in os.walk(pathToSearch):
 		filesNames = [f for f in fileNames if not f[0] == '.'] #don't add hidden files
-		subfolders[:] = [s for s in subfolders if not s[0] == '.']
+		subfolders[:] = [s for s in subfolders if not s[0] == '.'] #change list so it has only not hidden files
 
 		for file in fileNames:
 			if file.startswith('~$'):
@@ -36,28 +36,6 @@ def countAndPrintSorted(filesToCount, withOrWithoutWord):
 
 	print('There are ' + str(len(filesToCount)) + ' files ' + withOrWithoutWord + ' your extentions with total size of ' + str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n')
 	logFile.write('There are ' + str(len(filesToCount)) + ' files ' + withOrWithoutWord + ' your extentions with total size of ' + str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n\n')	
-
-def sortByExt(allFiles, extList, withOrWithout):
-	logFile.write('\nStart to sort out files with urers\' extentions\n')
-	filesWithExt = []
-	filesWithoutExt = []
-	for file in allFiles:
-		if file.endswith(extList):
-			filesWithExt.append(file)
-		else:
-			filesWithoutExt.append(file)	
-	
-	if withOrWithout: #if it is True
-		withOrWithoutWord = 'with'
-		countAndPrintSorted(filesWithExt, withOrWithoutWord)
-		return filesWithExt
-	else:
-		withOrWithoutWord = 'without'
-		countAndPrintSorted(filesWithoutExt, withOrWithoutWord)
-		return filesWithoutExt
-
-#def zipFiles():
-
 
 def addExt():
 	answer2 = ''
@@ -93,6 +71,27 @@ def addExt():
 
 	return tuple(extList)
 
+def sortByExt(allFiles, extList, withOrWithout):
+	logFile.write('\nStart to sort out files with urers\' extentions\n')
+	filesWithExt = []
+	filesWithoutExt = []
+	for file in allFiles:
+		if file.endswith(extList):
+			filesWithExt.append(file)
+		else:
+			filesWithoutExt.append(file)	
+	
+	if withOrWithout: #if it is True
+		withOrWithoutWord = 'with'
+		countAndPrintSorted(filesWithExt, withOrWithoutWord)
+		return filesWithExt
+	else:
+		withOrWithoutWord = 'without'
+		countAndPrintSorted(filesWithoutExt, withOrWithoutWord)
+		return filesWithoutExt
+
+#def zipFiles():
+
 logFile = open('.\\logZipByExtention.txt', 'w')
 
 logFile.write('Program has started.\n')
@@ -113,10 +112,12 @@ while True:
 			continue
 	else:
 		print('There is no such directory. Try again.\n')	
-		logFile.write('There is no such directory. Try again.\n')	
+		logFile.write('There is no such directory. Try again.\n')
+		continue
 
 
 allFiles = lookingForFiles(pathToSearch)
+#return all files from path - return list with paths to these files
 
 ############# ask user about which files he wants to zip #############
 
@@ -124,8 +125,8 @@ while True:
 	answer1 = input('Would you like to \n - (1) zip files with certain extentions \n or \n - (2) zip all files except files with these extentions?\nYour answer is: ')
 	logFile.write('Would you like to \n - (1) zip files with certain extentions \n or \n - (2) zip all files except files with these extentions?\nYour answer is: \n')
 	if answer1 == '1':
-		#return all files from path - return list with path to these files
 		extList = addExt()
+		#get list of extention to sort by from user
 		filesByExt = sortByExt(allFiles, extList, True)
 		#add to list only file with users' extentions
 		
