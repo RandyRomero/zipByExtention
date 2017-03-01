@@ -9,7 +9,7 @@ def lookingForFiles(pathToSearch):
 	allFiles = []
 	totalSize = 0
 	for folderName, subfolders, fileNames in os.walk(pathToSearch):
-		filesNames = [f for f in fileNames if not f[0] == '.'] #don't add jidden files
+		filesNames = [f for f in fileNames if not f[0] == '.'] #don't add hidden files
 		subfolders[:] = [s for s in subfolders if not s[0] == '.']
 
 		for file in fileNames:
