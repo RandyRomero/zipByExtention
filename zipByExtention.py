@@ -16,7 +16,10 @@ def lookingForFiles(pathToSearch):
 			if file.startswith('~$'):
 				continue
 			else:
-				size = os.path.getsize(os.path.join(folderName, file))
+				try:
+					size = os.path.getsize(os.path.join(folderName, file))
+				except FileNotFoundError:
+					size = os.path.getsize(os.path.join('\\\\?\\' + folderName, file))
 				totalSize += size
 				allFiles.append(os.path.join(folderName, file))
 				logFile.write(os.path.join(folderName, file) + '\n')
