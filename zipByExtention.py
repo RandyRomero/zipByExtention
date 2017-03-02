@@ -92,7 +92,7 @@ def sortByExt(allFiles, extList, withOrWithout):
 
 #def zipFiles():
 
-logFile = open('.\\logZipByExtention.txt', 'w')
+logFile = open('.\\logZipByExtention.txt', 'w', encoding='UTF-8')
 
 logFile.write('Program has started.\n')
 
