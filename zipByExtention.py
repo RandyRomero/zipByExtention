@@ -50,7 +50,7 @@ def addExt():
 		answer2 = input('\nType here an extention.\nWhen you are done, type "d" and press enter.\nIf you want to exit, type "e" and press enter: ')
 		logFile.write('Ask user for extention or a command.\n')
 		if answer2 == 'd' and len(extList) > 0:
-			print('\nThank you. Start to sort files out')
+			print('\nThank you.')
 			logFile.write('User done to add extentions. List of extentions containts ' + str(len(extList)) + ' items.')
 			break
 		elif answer2 == 'd' and len(extList) <= 0:
@@ -100,7 +100,6 @@ def sortByExt(allFiles, extList, withOrWithout):
 #def zipFiles():
 
 logFile = open('.\\logZipByExtention.txt', 'w', encoding='UTF-8')
-
 logFile.write('Program has started.\n')
 
 ########## ask user about path to work and check it #####################
@@ -151,6 +150,43 @@ while True:
 		continue	
 
 
+######## ask user where to store archive and name of new archive ########
+
+while True:
+	pathToStoreArchive = input('Please type here path to store archive: \n')
+	
+	if re.search(r'^([a-zA-Z]\:\\)', pathToStoreArchive) == None:
+		print('Error: it should be an absolute path which starts with something like C:\\. Try again')
+		continue
+	elif os.path.exists(pathToStoreArchive):
+		print('Tnahk you.')
+		logFile.write('Path to store archive is ' + pathToStoreArchive + '\n')
+		break
+	else:
+		os.mkdir(pathToStoreArchive)
+		print('Tnahk you.')
+		print('Path to store archive is ' + os.path.abspath(pathToStoreArchive))
+		logFile.write('Path to store archive is ' + os.path.abspath(pathToStoreArchive) + '\n') 
+		break
+
+while True:
+	archiveName = input('Please write down name of archive. For example MyArchive: ')
+	logFile.write('Archive name is: ' + archiveName + '\n')
+	if re.search(r'[\%\#\&\{\}\\\<\>\*\?\/\$!\'\":@\+`|=]', archiveName) != None:
+		print('Error: ' + archiveName + ' contains forbidden charachters. Choose another name')
+		logFile.write('Error: ' + archiveName + ' contains forbidden charachters. Choose another name\n')
+		continue
+	elif os.path.exists(os.path.join(pathToStoreArchive, archiveName, '.zip')):
+		print('Error: archive with this name already exists in this directory')
+		logFile.write('Error: archive with this name already exists in this directory\n')
+		continue
+	else:
+		print('Thank you. Name was accepted')
+		logFile.write('Name of archive was accepted\n')
+		break
+
+print('End of code. It was nice to see you. Take care')
+logFile.write('Program has reached end. Auf Wiederluge!')
 logFile.close()	
 
 #(\.\w{2,4})
