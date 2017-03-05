@@ -9,8 +9,8 @@ def lookingForFiles(pathToSearch):
 	allFiles = []
 	totalSize = 0
 	for folderName, subfolders, fileNames in os.walk(pathToSearch):
-		filesNames = [f for f in fileNames if not f[0] == '.'] #don't add hidden files
-		subfolders[:] = [s for s in subfolders if not s[0] == '.'] #change list so it has only not hidden files
+		filesNames = [f for f in fileNames if not f[0] == '.'] #create list that doesn't have hidden files
+		subfolders[:] = [s for s in subfolders if not s[0] == '.'] #change list to exclude hidden folders
 
 		for file in fileNames:
 			if file.startswith('~$'):
@@ -23,6 +23,9 @@ def lookingForFiles(pathToSearch):
 				totalSize += size
 				allFiles.append(os.path.join(folderName, file))
 				logFile.write(os.path.join(folderName, file) + '\n')
+
+	#We need to use \\?\ before path that is more than 260 symbols
+	#otherwise we get an error			
 
 	print('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n')
 	logFile.write('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n\n')
@@ -79,7 +82,7 @@ def sortByExt(allFiles, extList, withOrWithout):
 	filesWithExt = []
 	filesWithoutExt = []
 	for file in allFiles:
-		if file.endswith(extList):
+		if file.endswith(extList): #you can compare with list
 			filesWithExt.append(file)
 		else:
 			filesWithoutExt.append(file)	
