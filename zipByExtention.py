@@ -58,7 +58,8 @@ def addExt():
 			logFile.write('User press "d" but list of extentions is empty\n' )
 			continue
 		elif re.search(r'^\w{2,4}$', answer2) != None:
-			extList.append(answer2)
+			extList.append(answer2.upper())
+			extList.append(answer2.lower())
 			print('Extention ' + answer2 + ' was added. There are these extention to look for now: ')
 			logFile.write('Extention ' + answer2 + ' was added. There are these extention to look for now: \n')
 			for i in extList:
