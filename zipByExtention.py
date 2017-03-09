@@ -150,52 +150,50 @@ extList = addExt()
 #find out wich files script will put to archive
 filesToArchive = sortByExt(allFiles, extList, withOrWithoutExt)
 
-if len(filesToArchive) > 0: # if there are some files to put in archive
-
-	######## ask user where to store archive and name of new archive ########
-
-	while True:
-		pathToStoreArchive = input('Please type here path to store archive: \n')
-		
-		if re.search(r'^([a-zA-Z]\:\\)', pathToStoreArchive) == None:
-			print('Error: it should be an absolute path which starts with something like C:\\\\. Try again')
-			logFile.write('Error: it should be an absolute path which starts with something like C:\\\\. Try again\n')
-			continue
-		elif os.path.exists(pathToStoreArchive):
-			print('Tnahk you.')
-			logFile.write('Path to store archive is ' + pathToStoreArchive + '\n')
-			break
-		else:
-			os.makedirs(pathToStoreArchive)
-			print('Tnahk you.')
-			logFile.write('Path to store archive is ' + os.path.abspath(pathToStoreArchive) + '\n')
-			break
-
-	while True:
-		archiveName = input('Please write down name of archive. For example MyArchive: ')
-		logFile.write('Archive name is: ' + archiveName + '\n')
-		if re.search(r'[\%\#\&\{\}\\\<\>\*\?\/\$!\'\":@\+`|=]', archiveName) != None:
-			print('Error: ' + archiveName + ' contains forbidden charachters. Choose another name')
-			logFile.write('Error: ' + archiveName + ' contains forbidden charachters. Choose another name\n')
-			continue
-		elif os.path.exists(os.path.join(pathToStoreArchive, archiveName + '.zip')):
-			print('Error: archive with this name already exists in this directory')
-			logFile.write('Error: archive with this name already exists in this directory\n')
-			continue
-		else:
-			print('Thank you. Path to archive is: ' + os.path.join(pathToStoreArchive, archiveName + '.zip'))
-			logFile.write('Thank you. Path to archive is: ' + os.path.join(pathToStoreArchive, archiveName + '.zip') + '\n')
-			break
-
-	print('End of code. It was nice to see you. Take care.')
-	logFile.write('Program has reached end. Auf Wiederluge!')
-	logFile.close()	
-
-else:
+if len(filesToArchive) <= 0: 
+	# if there is nothing to put in archive
 	print('Nothing to archive. Programs stops. Goodbye')
-	logFile.write('Nothing to archive. Program stops. Goodbye\n')
+	logFile.write('Nothing to archive. Program stops. Goodbye.\n')
 	sys.exit()
 
+######## ask user where to store archive and name of new archive ########
+
+while True:
+	pathToStoreArchive = input('Please type here path to store archive: \n')
+	
+	if re.search(r'^([a-zA-Z]\:\\)', pathToStoreArchive) == None:
+		print('Error: it should be an absolute path which starts with something like C:\\\\. Try again')
+		logFile.write('Error: it should be an absolute path which starts with something like C:\\\\. Try again\n')
+		continue
+	elif os.path.exists(pathToStoreArchive):
+		print('Tnahk you.')
+		logFile.write('Path to store archive is ' + pathToStoreArchive + '\n')
+		break
+	else:
+		os.makedirs(pathToStoreArchive)
+		print('Tnahk you.')
+		logFile.write('Path to store archive is ' + os.path.abspath(pathToStoreArchive) + '\n')
+		break
+
+while True:
+	archiveName = input('Please write down name of archive. For example MyArchive: ')
+	logFile.write('Archive name is: ' + archiveName + '\n')
+	if re.search(r'[\%\#\&\{\}\\\<\>\*\?\/\$!\'\":@\+`|=]', archiveName) != None:
+		print('Error: ' + archiveName + ' contains forbidden charachters. Choose another name')
+		logFile.write('Error: ' + archiveName + ' contains forbidden charachters. Choose another name\n')
+		continue
+	elif os.path.exists(os.path.join(pathToStoreArchive, archiveName + '.zip')):
+		print('Error: archive with this name already exists in this directory')
+		logFile.write('Error: archive with this name already exists in this directory\n')
+		continue
+	else:
+		print('Thank you. Path to archive is: ' + os.path.join(pathToStoreArchive, archiveName + '.zip'))
+		logFile.write('Thank you. Path to archive is: ' + os.path.join(pathToStoreArchive, archiveName + '.zip') + '\n')
+		break
+
+print('End of code. It was nice to see you. Take care.')
+logFile.write('Program has reached end. Auf Wiederluge!')
+logFile.close()	
 
 
 #(\.\w{2,4})
