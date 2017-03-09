@@ -156,7 +156,8 @@ while True:
 	pathToStoreArchive = input('Please type here path to store archive: \n')
 	
 	if re.search(r'^([a-zA-Z]\:\\)', pathToStoreArchive) == None:
-		print('Error: it should be an absolute path which starts with something like C:\\. Try again')
+		print('Error: it should be an absolute path which starts with something like C:\\\\. Try again')
+		logFile.write('Error: it should be an absolute path which starts with something like C:\\\\. Try again\n')
 		continue
 	elif os.path.exists(pathToStoreArchive):
 		print('Tnahk you.')
@@ -185,7 +186,7 @@ while True:
 		logFile.write('Name of archive was accepted\n')
 		break
 
-print('End of code. It was nice to see you. Take care')
+print('End of code. It was nice to see you. Take care.')
 logFile.write('Program has reached end. Auf Wiederluge!')
 logFile.close()	
 
