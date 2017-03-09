@@ -80,22 +80,21 @@ def addExt():
 
 def sortByExt(allFiles, extList, withOrWithout):
 	logFile.write('\nStart to sort out files with urers\' extentions\n')
-	filesWithExt = []
-	filesWithoutExt = []
-	for file in allFiles:
-		if file.endswith(extList): #you can compare with list
-			filesWithExt.append(file)
-		else:
-			filesWithoutExt.append(file)	
-	
-	if withOrWithout: #if it is True
-		withOrWithoutWord = 'with'
-		countAndPrintSorted(filesWithExt, withOrWithoutWord)
-		return filesWithExt
-	else:
-		withOrWithoutWord = 'without'
-		countAndPrintSorted(filesWithoutExt, withOrWithoutWord)
-		return filesWithoutExt
+	filesToArchive = []
+
+	if withOrWithout:
+		for file in allFiles:
+			if file.endswith(extList):
+				filesToArchive.append(file)
+		countAndPrintSorted(filesToArchive, 'with')
+		return filesToArchive
+
+	elif not withOrWithout:
+		for file in allFiles:
+			if not file.endswith(extList):
+				filesToArchive.append(file)
+		countAndPrintSorted(filesToArchive, 'without')		
+		return filesToArchive					
 
 #def zipFiles():
 
@@ -133,14 +132,14 @@ while True:
 	if answer1 == '1':
 		extList = addExt()
 		#get list of extention to sort by from user
-		filesByExt = sortByExt(allFiles, extList, True)
+		filesToArchive = sortByExt(allFiles, extList, True)
 		#add to list only file with users' extentions
 		
 		#put files in archive
 		break
 	elif answer1 == '2':
 		extList = addExt()
-		filesByExt = sortByExt(allFiles, extList, False)
+		filesToArchive = sortByExt(allFiles, extList, False)
 		#add to list all files except from these with users' extentions - return list with path to these files
 		#print some statistics of number and size of files
 		#put files in archive
