@@ -166,7 +166,6 @@ while True:
 	else:
 		os.mkdir(pathToStoreArchive)
 		print('Tnahk you.')
-		print('Path to store archive is ' + os.path.abspath(pathToStoreArchive))
 		logFile.write('Path to store archive is ' + os.path.abspath(pathToStoreArchive) + '\n') 
 		break
 
@@ -177,13 +176,13 @@ while True:
 		print('Error: ' + archiveName + ' contains forbidden charachters. Choose another name')
 		logFile.write('Error: ' + archiveName + ' contains forbidden charachters. Choose another name\n')
 		continue
-	elif os.path.exists(os.path.join(pathToStoreArchive, archiveName, '.zip')):
+	elif os.path.exists(os.path.join(pathToStoreArchive, archiveName + '.zip')):
 		print('Error: archive with this name already exists in this directory')
 		logFile.write('Error: archive with this name already exists in this directory\n')
 		continue
 	else:
-		print('Thank you. Name was accepted')
-		logFile.write('Name of archive was accepted\n')
+		print('Thank you. Path to archive is: ' + os.path.join(pathToStoreArchive, archiveName + '.zip'))
+		logFile.write('Thank you. Path to archive is: ' + os.path.join(pathToStoreArchive, archiveName + '.zip') + '\n')
 		break
 
 print('End of code. It was nice to see you. Take care.')
