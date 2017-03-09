@@ -4,6 +4,14 @@
 
 import os, re, shutil, sys, zipfile
 
+def workflow(withOrWithout):
+	
+	#get list of extention to sort by from user
+	extList = addExt()
+	#find out wich files script will put to archive
+	filesToArchive = sortByExt(allFiles, extList, withOrWithout)
+
+
 def lookingForFiles(pathToSearch):
 	logFile.write('There are these files in:\n' + pathToSearch + '\n')
 	allFiles = []
@@ -130,19 +138,10 @@ while True:
 	answer1 = input('Would you like to \n - (1) zip files with certain extentions \n or \n - (2) zip all files except files with these extentions?\nYour answer is: ')
 	logFile.write('Would you like to \n - (1) zip files with certain extentions \n or \n - (2) zip all files except files with these extentions?\nYour answer is: \n')
 	if answer1 == '1':
-		extList = addExt()
-		#get list of extention to sort by from user
-		filesToArchive = sortByExt(allFiles, extList, True)
-		#add to list only file with users' extentions
-		
-		#put files in archive
+		workflow(True) 
 		break
 	elif answer1 == '2':
-		extList = addExt()
-		filesToArchive = sortByExt(allFiles, extList, False)
-		#add to list all files except from these with users' extentions - return list with path to these files
-		#print some statistics of number and size of files
-		#put files in archive
+		workflow(False)
 		break
 	else:
 		print('Input error. You should type only 1 or 2. Try again.')
