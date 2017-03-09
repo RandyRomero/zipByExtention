@@ -164,9 +164,9 @@ while True:
 		logFile.write('Path to store archive is ' + pathToStoreArchive + '\n')
 		break
 	else:
-		os.mkdir(pathToStoreArchive)
+		os.makedirs(pathToStoreArchive)
 		print('Tnahk you.')
-		logFile.write('Path to store archive is ' + os.path.abspath(pathToStoreArchive) + '\n') 
+		logFile.write('Path to store archive is ' + os.path.abspath(pathToStoreArchive) + '\n')
 		break
 
 while True:
