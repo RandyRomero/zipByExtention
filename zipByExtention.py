@@ -25,7 +25,7 @@ def lookingForFiles(pathToSearch):
 				allFiles.append(os.path.join(folderName, file))
 				logFile.write(os.path.join(folderName, file) + '\n')
 
-	if len(allFiles) == 0:
+	if len(allFiles) == 0: 
 		return 0			
 
 	print('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n')
@@ -127,12 +127,6 @@ while True:
 		logFile.write('There is no such directory. Try again.\n')
 		continue
 
-	
-
-#####################################################################
-
-
-
 ############# ask user about which files he wants to zip #############
 
 while True:
@@ -171,8 +165,8 @@ while True:
 	pathToStoreArchive = input('Please type here path to store archive: \n')
 	
 	if re.search(r'^([a-zA-Z]\:\\)', pathToStoreArchive) == None:
-		print('Error: it should be an absolute path which starts with something like C:\\\\. Try again')
-		logFile.write('Error: it should be an absolute path which starts with something like C:\\\\. Try again\n')
+		print('Error: it should be an absolute path which starts with something like C:\\. Try again')
+		logFile.write('Error: it should be an absolute path which starts with something like C:\\. Try again\n')
 		continue
 	elif os.path.exists(pathToStoreArchive):
 		print('Tnahk you.')
@@ -181,12 +175,12 @@ while True:
 	else:
 		os.makedirs(pathToStoreArchive)
 		print('Tnahk you.')
-		logFile.write('Path to store archive is ' + os.path.abspath(pathToStoreArchive) + '\n')
+		logFile.write('Path to store archive is ' + pathToStoreArchive + '\n')
 		break
 
 while True:
 	archiveName = input('Please write down name of archive. For example MyArchive: ')
-	logFile.write('Archive name is: ' + archiveName + '\n')
+	logFile.write('Please write down name of archive. For example MyArchive: ' + archiveName + '\n')
 	if re.search(r'[\%\#\&\{\}\\\<\>\*\?\/\$!\'\":@\+`|=]', archiveName) != None:
 		print('Error: ' + archiveName + ' contains forbidden charachters. Choose another name')
 		logFile.write('Error: ' + archiveName + ' contains forbidden charachters. Choose another name\n')
