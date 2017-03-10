@@ -20,12 +20,13 @@ def lookingForFiles(pathToSearch):
 					size = os.path.getsize(os.path.join(folderName, file))
 				except FileNotFoundError:
 					size = os.path.getsize(os.path.join('\\\\?\\' + folderName, file))
+					#We need to use \\?\ before path that is more than 260 symbols otherwise we get an error
 				totalSize += size
 				allFiles.append(os.path.join(folderName, file))
 				logFile.write(os.path.join(folderName, file) + '\n')
 
-	#We need to use \\?\ before path that is more than 260 symbols
-	#otherwise we get an error			
+	if len(allFiles) == 0:
+		return 0			
 
 	print('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n')
 	logFile.write('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n\n')
@@ -96,7 +97,7 @@ def sortByExt(allFiles, extList, withOrWithout):
 		countAndPrintSorted(filesToArchive, 'without')		
 		return filesToArchive					
 
-#def zipFiles():
+#########################################################################
 
 logFile = open('.\\logZipByExtention.txt', 'w', encoding='UTF-8')
 logFile.write('Program has started.\n')
@@ -110,7 +111,13 @@ while True:
 		if os.path.isdir(pathToSearch):
 			print('Ok, this directory exists.\n')
 			logFile.write('Path to direcory to zip accepted: \n' + pathToSearch + '\n')
-			break
+			allFiles = lookingForFiles(pathToSearch)
+			
+			if allFiles == 0:
+				print('The folder is empty. Choose another')
+				logFile.write(pathToSearch + ' is emptry. Restart loop\n')
+				continue
+			break	
 		else:
 			print('It should be folder, not a file.\n')	
 			logFile.write('It should be folder, not a file.\n')	
@@ -120,9 +127,11 @@ while True:
 		logFile.write('There is no such directory. Try again.\n')
 		continue
 
+	
 
-allFiles = lookingForFiles(pathToSearch)
-#return all files from path - return list with paths to these files
+#####################################################################
+
+
 
 ############# ask user about which files he wants to zip #############
 
@@ -152,7 +161,7 @@ filesToArchive = sortByExt(allFiles, extList, withOrWithoutExt)
 
 if len(filesToArchive) <= 0: 
 	# if there is nothing to put in archive
-	print('Nothing to archive. Programs stops. Goodbye')
+	print('Nothing to archive. Programs stops. Goodbye.')
 	logFile.write('Nothing to archive. Program stops. Goodbye.\n')
 	sys.exit()
 
