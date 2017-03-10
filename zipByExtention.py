@@ -136,29 +136,24 @@ while True:
 		#set program arcive files with user's extention
 		withOrWithoutExt = True
 		logFile.write('Program will archive files with users\' extentions')
-		break
 	elif answer1 == '2':
 		#set program to archive files without user's files
 		withOrWithoutExt = False
 		logFile.write('Program will archive files without users\' extentions\n')
-		break
 	else:
 		print('Input error. You should type only 1 or 2. Try again.')
 		continue
 
-#########################################################################	
+	#get list of extention to sort by from user
+	extList = addExt()
+	#find out wich files script will put to archive
+	filesToArchive = sortByExt(allFiles, extList, withOrWithoutExt)
 
-#get list of extention to sort by from user
-extList = addExt()
-#find out wich files script will put to archive
-filesToArchive = sortByExt(allFiles, extList, withOrWithoutExt)
-
-if len(filesToArchive) <= 0: 
-	# if there is nothing to put in archive
-	print('Nothing to archive. Programs stops. Goodbye.')
-	logFile.write('Nothing to archive. Program stops. Goodbye.\n')
-	logFile.close()
-	sys.exit()
+	if len(filesToArchive) <= 0: 
+		# if there is nothing to put in archive - restart loop
+		print('Zero matches. Please, enter another extentions.\n')
+		logFile.write('Zero matches. Restart loop.\n')
+		continue	
 
 ################### ask user where to store archive  ########################
 
