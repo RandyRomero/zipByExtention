@@ -157,9 +157,10 @@ if len(filesToArchive) <= 0:
 	# if there is nothing to put in archive
 	print('Nothing to archive. Programs stops. Goodbye.')
 	logFile.write('Nothing to archive. Program stops. Goodbye.\n')
+	logFile.close()
 	sys.exit()
 
-######## ask user where to store archive and name of new archive ########
+################### ask user where to store archive  ########################
 
 while True:
 	pathToStoreArchive = input('Please type here path to store archive: \n')
@@ -177,6 +178,8 @@ while True:
 		print('Tnahk you.')
 		logFile.write('Path to store archive is ' + pathToStoreArchive + '\n')
 		break
+
+################## ask user the name of the new archive #####################
 
 while True:
 	archiveName = input('Please write down name of archive. For example MyArchive: ')
