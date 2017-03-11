@@ -33,11 +33,12 @@ def lookingForFiles(pathToSearch):
 	if len(allFiles) == 0: 
 		return 0			
 
-	logFile.write('\n')	
+	logFile.write('\n')
 	printGrid(1)
 	print('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.')
 	logFile.write('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n')
 	printGrid(1)
+	logFile.write('\n')
 	print()
 	
 			
@@ -51,8 +52,12 @@ def countAndPrintSorted(filesToCount, withOrWithoutWord):
 		totalSize += size
 		logFile.write(item + '\n')
 
-	print('There are ' + str(len(filesToCount)) + ' files ' + withOrWithoutWord + ' your extentions with total size of ' + str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n')
-	logFile.write('There are ' + str(len(filesToCount)) + ' files ' + withOrWithoutWord + ' your extentions with total size of ' + str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n\n')	
+	logFile.write('\n')
+	printGrid(1)	
+	print('There are ' + str(len(filesToCount)) + ' files ' + withOrWithoutWord + ' your extentions with total size of ' + str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.')
+	logFile.write('There are ' + str(len(filesToCount)) + ' files ' + withOrWithoutWord + ' your extentions with total size of ' + str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n')
+	printGrid(1)
+	print()	
 
 def addExt():
 	answer2 = ''
@@ -61,7 +66,7 @@ def addExt():
 		answer2 = input('\nType here some extentions one by one separated by "enter".\nWhen you are done, type "d" and press enter.\nIf you want to exit, type "e" and press enter: ')
 		logFile.write('Ask user for extention or a command.\n')
 		if answer2 == 'd' and len(extList) > 0:
-			print('\nThank you.')
+			print('Thank you.\n')
 			logFile.write('User done to add extentions. List of extentions containts ' + str(len(extList)) + ' items.')
 			break
 		elif answer2 == 'd' and len(extList) <= 0:
@@ -123,10 +128,11 @@ def zipFiles(filesToArchive, pathToStoreArchive):
 			archive.write(file, os.path.relpath(file), compress_type=zipfile.ZIP_DEFLATED)
 
 		print('Compressing %s...' % (file))
-		logFile.write('Compressing %s...' % (file))
+		logFile.write('Compressing %s...' % (file) + '\n')
+	
 	archive.close()
 	print('Compressing is done')	
-	logFile.write('Compressing is done\n')
+	logFile.write('\nCompressing is done\n')
 
 
 
@@ -201,6 +207,7 @@ while True:
 
 while True:
 	folderToStoreArchive = input('Please type here path to store archive: \n')
+	logFile.write('\nPlease type here path to store archive: ' + folderToStoreArchive + '\n')
 	
 	if re.search(r'^([a-zA-Z]\:\\)', folderToStoreArchive) == None:
 		print('Error: it should be an absolute path which starts with something like C:\\. Try again')
@@ -220,7 +227,7 @@ while True:
 
 while True:
 	archiveName = input('Please write down name of archive. For example MyArchive: ')
-	logFile.write('Please write down name of archive. For example MyArchive: ' + archiveName + '\n')
+	logFile.write('\nPlease write down name of archive. For example MyArchive: ' + archiveName + '\n')
 	if re.search(r'[\%\#\&\{\}\\\<\>\*\?\/\$!\'\":@\+`|=]', archiveName) != None:
 		print('Error: ' + archiveName + ' contains forbidden charachters. Choose another name')
 		logFile.write('Error: ' + archiveName + ' contains forbidden charachters. Choose another name\n')
@@ -231,7 +238,7 @@ while True:
 		continue
 	else:
 		print('Thank you. Path to archive is: ' + os.path.join(folderToStoreArchive, archiveName + '.zip'))
-		logFile.write('Thank you. Path to archive is: ' + os.path.join(folderToStoreArchive, archiveName + '.zip') + '\n')
+		logFile.write('Thank you. Path to archive is: ' + os.path.join(folderToStoreArchive, archiveName + '.zip') + '\n\n')
 		break
 
 pathToStoreArchive = os.path.join(folderToStoreArchive, archiveName + '.zip')
@@ -245,6 +252,3 @@ zipFiles(filesToArchive, pathToStoreArchive)
 print('\nEnd of code. It was nice to see you. Take care.')
 logFile.write('Program has reached end. Auf Wiederluge!')
 logFile.close()	
-
-
-#(\.\w{2,4})
