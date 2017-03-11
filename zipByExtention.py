@@ -4,8 +4,13 @@
 
 import os, re, shutil, sys, zipfile
 
+def printGrid(number):
+	for i in range(number):
+		print('##############################################################')
+		logFile.write('##############################################################\n')
+
 def lookingForFiles(pathToSearch):
-	logFile.write('There are these files in:\n' + pathToSearch + '\n')
+	logFile.write('There are these files in: ' + pathToSearch + '\n')
 	allFiles = []
 	totalSize = 0
 	for folderName, subfolders, fileNames in os.walk(pathToSearch):
@@ -28,8 +33,13 @@ def lookingForFiles(pathToSearch):
 	if len(allFiles) == 0: 
 		return 0			
 
-	print('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n')
-	logFile.write('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n\n')
+	logFile.write('\n')	
+	printGrid(1)
+	print('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.')
+	logFile.write('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n')
+	printGrid(1)
+	print()
+	
 			
 	return allFiles #list of all files including files in subfolders
 
@@ -123,17 +133,25 @@ def zipFiles(filesToArchive, pathToStoreArchive):
 #########################################################################
 
 logFile = open('.\\logZipByExtention.txt', 'w', encoding='UTF-8')
-logFile.write('Program has started.\n')
+logFile.write('Program has started.\n\n')
+
+print()
+printGrid(3)
+print('Hello there! This is script for acrhiving files. Let\'s begin!')
+logFile.write('Hello there! This is script for acrhiving files. Let\'s begin!\n')
+printGrid(3)
+print()
 
 ########## ask user about path to work and check it #####################
 
 while True:
-	logFile.write('Type in path to directory to zip: \n')
-	pathToSearch = input('Type in path to directory to zip: \n')
+	pathToSearch = input('Stage 1: Type in path to directory where to look for your files to be zipped: \n')
+	logFile.write('\nStage 1: Type in path to directory where to look for your files to be zipped: ' + pathToSearch + '\n')
+	
 	if os.path.exists(pathToSearch):
 		if os.path.isdir(pathToSearch):
 			print('Ok, this directory exists.\n')
-			logFile.write('Path to direcory to zip accepted: \n' + pathToSearch + '\n')
+			logFile.write('Path to direcory to zip accepted: ' + pathToSearch + '\n\n')
 			allFiles = lookingForFiles(pathToSearch)
 			
 			if allFiles == 0:
@@ -224,9 +242,7 @@ print('Start to zip files')
 zipFiles(filesToArchive, pathToStoreArchive)
 
 
-
-
-print('End of code. It was nice to see you. Take care.')
+print('\nEnd of code. It was nice to see you. Take care.')
 logFile.write('Program has reached end. Auf Wiederluge!')
 logFile.close()	
 
