@@ -99,11 +99,19 @@ def sortByExt(allFiles, extList, withOrWithout):
 
 def zipFiles(filesToArchive, pathToStoreArchive):
 	archive = zipfile.ZipFile(pathToStoreArchive, 'w')
+	
+	filesInArchive = []
 	for file in filesToArchive:
-		archive.write(file, arcname=os.path.basename(file), compress_type=zipfile.ZIP_DEFLATED)
-		# file if full path to archive (could be relative if you want)
-		# arcname - is name only for archive
-		# here I rename files to left only its name without relative of full path
+		# if-else here for preventing occurence files with the same basenames in archive 
+		if os.path.basename(file) not in filesInArchive:
+			archive.write(file, arcname=os.path.basename(file), compress_type=zipfile.ZIP_DEFLATED)
+			filesInArchive.append(os.path.basename(file))
+			# file if full path to archive (could be relative if you want)
+			# arcname - is name only for archive
+			# here I rename files to left only its name without relative of full path
+		else:
+			archive.write(file, os.path.relpath(file), compress_type=zipfile.ZIP_DEFLATED)
+
 		print('Compressing %s...' % (file))
 		logFile.write('Compressing %s...' % (file))
 	archive.close()
