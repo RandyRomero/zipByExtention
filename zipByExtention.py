@@ -48,7 +48,7 @@ def addExt():
 	answer2 = ''
 	extList = []
 	while True:
-		answer2 = input('\nType here an extention.\nWhen you are done, type "d" and press enter.\nIf you want to exit, type "e" and press enter: ')
+		answer2 = input('\nType here some extentions one by one separated by "enter".\nWhen you are done, type "d" and press enter.\nIf you want to exit, type "e" and press enter: ')
 		logFile.write('Ask user for extention or a command.\n')
 		if answer2 == 'd' and len(extList) > 0:
 			print('\nThank you.')
@@ -95,7 +95,22 @@ def sortByExt(allFiles, extList, withOrWithout):
 			if not file.endswith(extList):
 				filesToArchive.append(file)
 		countAndPrintSorted(filesToArchive, 'without')		
-		return filesToArchive					
+		return filesToArchive
+
+def zipFiles(filesToArchive, pathToStoreArchive):
+	archive = zipfile.ZipFile(pathToStoreArchive, 'w')
+	for file in filesToArchive:
+		archive.write(file, arcname=os.path.basename(file), compress_type=zipfile.ZIP_DEFLATED)
+		# file if full path to archive (could be relative if you want)
+		# arcname - is name only for archive
+		# here I rename files to left only its name without relative of full path
+		print('Compressing %s...' % (file))
+		logFile.write('Compressing %s...' % (file))
+	archive.close()
+	print('Compressing is done')	
+	logFile.write('Compressing is done\n')
+
+
 
 #########################################################################
 
@@ -153,25 +168,26 @@ while True:
 		# if there is nothing to put in archive - restart loop
 		print('Zero matches. Please, enter another extentions.\n')
 		logFile.write('Zero matches. Restart loop.\n')
-		continue	
+		continue
+	break		
 
 ################### ask user where to store archive  ########################
 
 while True:
-	pathToStoreArchive = input('Please type here path to store archive: \n')
+	folderToStoreArchive = input('Please type here path to store archive: \n')
 	
-	if re.search(r'^([a-zA-Z]\:\\)', pathToStoreArchive) == None:
+	if re.search(r'^([a-zA-Z]\:\\)', folderToStoreArchive) == None:
 		print('Error: it should be an absolute path which starts with something like C:\\. Try again')
 		logFile.write('Error: it should be an absolute path which starts with something like C:\\. Try again\n')
 		continue
-	elif os.path.exists(pathToStoreArchive):
+	elif os.path.exists(folderToStoreArchive):
 		print('Tnahk you.')
-		logFile.write('Path to store archive is ' + pathToStoreArchive + '\n')
+		logFile.write('Path to store archive is ' + folderToStoreArchive + '\n')
 		break
 	else:
-		os.makedirs(pathToStoreArchive)
+		os.makedirs(folderToStoreArchive)
 		print('Tnahk you.')
-		logFile.write('Path to store archive is ' + pathToStoreArchive + '\n')
+		logFile.write('Path to store archive is ' + folderToStoreArchive + '\n')
 		break
 
 ################## ask user the name of the new archive #####################
@@ -183,14 +199,24 @@ while True:
 		print('Error: ' + archiveName + ' contains forbidden charachters. Choose another name')
 		logFile.write('Error: ' + archiveName + ' contains forbidden charachters. Choose another name\n')
 		continue
-	elif os.path.exists(os.path.join(pathToStoreArchive, archiveName + '.zip')):
+	elif os.path.exists(os.path.join(folderToStoreArchive, archiveName + '.zip')):
 		print('Error: archive with this name already exists in this directory')
 		logFile.write('Error: archive with this name already exists in this directory\n')
 		continue
 	else:
-		print('Thank you. Path to archive is: ' + os.path.join(pathToStoreArchive, archiveName + '.zip'))
-		logFile.write('Thank you. Path to archive is: ' + os.path.join(pathToStoreArchive, archiveName + '.zip') + '\n')
+		print('Thank you. Path to archive is: ' + os.path.join(folderToStoreArchive, archiveName + '.zip'))
+		logFile.write('Thank you. Path to archive is: ' + os.path.join(folderToStoreArchive, archiveName + '.zip') + '\n')
 		break
+
+pathToStoreArchive = os.path.join(folderToStoreArchive, archiveName + '.zip')
+
+##############################################################################
+
+print('Start to zip files')
+zipFiles(filesToArchive, pathToStoreArchive)
+
+
+
 
 print('End of code. It was nice to see you. Take care.')
 logFile.write('Program has reached end. Auf Wiederluge!')
