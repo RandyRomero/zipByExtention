@@ -62,6 +62,7 @@ def countAndPrintSorted(filesToCount, withOrWithoutWord):
 def addExt():
 	answer2 = ''
 	extList = []
+	print('\nStage 3: Adding extentions to work with.')
 	while True:
 		answer2 = input('\nType here some extentions one by one separated by "enter".\nWhen you are done, type "d" and press enter.\nIf you want to exit, type "e" and press enter: ')
 		logFile.write('Ask user for extention or a command.\n')
@@ -115,17 +116,18 @@ def sortByExt(allFiles, extList, withOrWithout):
 def zipFiles(filesToArchive, pathToStoreArchive):
 	archive = zipfile.ZipFile(pathToStoreArchive, 'w')
 	
-	filesInArchive = []
+	filesInArchive = [] #list to track files putted in archive
 	for file in filesToArchive:
-		# if-else here for preventing occurence files with the same basenames in archive 
+		# if-else here for preventing occurrence of files with the same basenames in archive 
 		if os.path.basename(file) not in filesInArchive:
 			archive.write(file, arcname=os.path.basename(file), compress_type=zipfile.ZIP_DEFLATED)
 			filesInArchive.append(os.path.basename(file))
-			# file if full path to archive (could be relative if you want)
-			# arcname - is name only for archive
+			# 'file' if full path to archive (could be relative if you want)
+			# 'arcname' - it is basename of archive
 			# here I rename files to left only its name without relative of full path
 		else:
 			archive.write(file, os.path.relpath(file), compress_type=zipfile.ZIP_DEFLATED)
+			#if file with such basename already exists in archive - script uses not basename, but relname
 
 		print('Compressing %s...' % (file))
 		logFile.write('Compressing %s...' % (file) + '\n')
@@ -177,8 +179,8 @@ while True:
 ############# ask user about which files he wants to zip #############
 
 while True:
-	answer1 = input('Would you like to \n - (1) zip files with certain extentions \n or \n - (2) zip all files except files with these extentions?\nYour answer is: ')
-	logFile.write('Would you like to \n - (1) zip files with certain extentions \n or \n - (2) zip all files except files with these extentions?\nYour answer is: \n')
+	answer1 = input('Stage 2: Would you like to \n - (1) zip files with certain extentions \n or \n - (2) zip all files except files with these extentions?\nYour answer is: ')
+	logFile.write('Stage 2: Would you like to \n - (1) zip files with certain extentions \n or \n - (2) zip all files except files with these extentions?\nYour answer is: \n')
 	if answer1 == '1':
 		#set program arcive files with user's extention
 		withOrWithoutExt = True
@@ -206,15 +208,15 @@ while True:
 ################### ask user where to store archive  ########################
 
 while True:
-	folderToStoreArchive = input('Please type here path to store archive: \n')
+	folderToStoreArchive = input('Stage 4: Please type here path to store archive: \n')
 	logFile.write('\nPlease type here path to store archive: ' + folderToStoreArchive + '\n')
 	
 	if re.search(r'^([a-zA-Z]\:\\)', folderToStoreArchive) == None:
-		print('Error: it should be an absolute path which starts with something like C:\\. Try again')
+		print('Error: it should be an absolute path which starts with something like C:\\. Try again.\n')
 		logFile.write('Error: it should be an absolute path which starts with something like C:\\. Try again\n')
 		continue
 	elif os.path.exists(folderToStoreArchive):
-		print('Tnahk you.')
+		print('Tnahk you.\n')
 		logFile.write('Path to store archive is ' + folderToStoreArchive + '\n')
 		break
 	else:
@@ -226,10 +228,10 @@ while True:
 ################## ask user the name of the new archive #####################
 
 while True:
-	archiveName = input('Please write down name of archive. For example MyArchive: ')
-	logFile.write('\nPlease write down name of archive. For example MyArchive: ' + archiveName + '\n')
+	archiveName = input('Stage 5: Please write down name of archive. For example MyArchive: ')
+	logFile.write('\nStage 5: Please write down name of archive. For example MyArchive: ' + archiveName + '\n')
 	if re.search(r'[\%\#\&\{\}\\\<\>\*\?\/\$!\'\":@\+`|=]', archiveName) != None:
-		print('Error: ' + archiveName + ' contains forbidden charachters. Choose another name')
+		print('Error: ' + archiveName + ' contains forbidden charachters. Choose another name.\n')
 		logFile.write('Error: ' + archiveName + ' contains forbidden charachters. Choose another name\n')
 		continue
 	elif os.path.exists(os.path.join(folderToStoreArchive, archiveName + '.zip')):
@@ -237,7 +239,7 @@ while True:
 		logFile.write('Error: archive with this name already exists in this directory\n')
 		continue
 	else:
-		print('Thank you. Path to archive is: ' + os.path.join(folderToStoreArchive, archiveName + '.zip'))
+		print('Thank you. Path to archive is: ' + os.path.join(folderToStoreArchive, archiveName + '.zip\n'))
 		logFile.write('Thank you. Path to archive is: ' + os.path.join(folderToStoreArchive, archiveName + '.zip') + '\n\n')
 		break
 
