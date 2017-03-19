@@ -4,6 +4,10 @@
 
 import os, re, shutil, sys, zipfile
 
+def prlog(message):
+	print(message)
+	logFile.write(message + '\n')
+
 def printGrid(number):
 	for i in range(number):
 		print('##############################################################')
@@ -35,11 +39,9 @@ def lookingForFiles(pathToSearch):
 
 	logFile.write('\n')
 	printGrid(1)
-	print('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.')
-	logFile.write('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n')
+	prlog('There are ' + str(len(allFiles)) + ' files with total size of '	+ str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.')
 	printGrid(1)
-	logFile.write('\n')
-	print()
+	prlog('')
 	
 			
 	return allFiles #list of all files including files in subfolders
@@ -54,10 +56,8 @@ def countAndPrintSorted(filesToCount, withOrWithoutWord):
 
 	logFile.write('\n')
 	printGrid(1)	
-	print('There are ' + str(len(filesToCount)) + ' files ' + withOrWithoutWord + ' your extentions with total size of ' + str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.')
-	logFile.write('There are ' + str(len(filesToCount)) + ' files ' + withOrWithoutWord + ' your extentions with total size of ' + str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.\n')
-	printGrid(1)
-	print()	
+	prlog('There are ' + str(len(filesToCount)) + ' files ' + withOrWithoutWord + ' your extentions with total size of ' + str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.')
+	prlog('')
 
 def addExt():
 	answer2 = ''
@@ -77,8 +77,7 @@ def addExt():
 		elif re.search(r'^\w{2,4}$', answer2) != None:
 			extList.append(answer2.upper())
 			extList.append(answer2.lower())
-			print('Extention ' + answer2 + ' was added. There are these extention to look for now: ')
-			logFile.write('Extention ' + answer2 + ' was added. There are these extention to look for now: \n')
+			prlog('Extention ' + answer2 + ' was added. There are these extention to look for now: ')
 			for i in extList:
 				print('- ' + i)
 				logFile.write('- ' + i + '\n')
@@ -96,7 +95,7 @@ def addExt():
 	return tuple(extList)
 
 def sortByExt(allFiles, extList, withOrWithout):
-	logFile.write('\nStart to sort out files with urers\' extentions\n')
+	logFile.write('\nStart to sort out files with users\' extentions\n')
 	filesToArchive = []
 
 	if withOrWithout:
@@ -129,13 +128,10 @@ def zipFiles(filesToArchive, pathToStoreArchive):
 			archive.write(file, os.path.relpath(file), compress_type=zipfile.ZIP_DEFLATED)
 			#if file with such basename already exists in archive - script uses not basename, but relname
 
-		print('Compressing %s...' % (file))
-		logFile.write('Compressing %s...' % (file) + '\n')
+		prlog('Compressing %s...' % (file))
 	
 	archive.close()
-	print('Compressing is done')	
-	logFile.write('\nCompressing is done\n')
-
+	prlog('Compressing is done.')	
 
 
 #########################################################################
@@ -145,8 +141,7 @@ logFile.write('Program has started.\n\n')
 
 print()
 printGrid(3)
-print('Hello there! This is script for acrhiving files. Let\'s begin!')
-logFile.write('Hello there! This is script for acrhiving files. Let\'s begin!\n')
+prlog('Hello there! This is script for acrhiving files. Let\'s begin!')
 printGrid(3)
 print()
 
@@ -168,12 +163,10 @@ while True:
 				continue
 			break	
 		else:
-			print('It should be folder, not a file.\n')	
-			logFile.write('It should be folder, not a file.\n')	
+			prlog('It should be folder, not a file.\n')	
 			continue
 	else:
-		print('There is no such directory. Try again.\n')	
-		logFile.write('There is no such directory. Try again.\n')
+		prlog('There is no such directory. Try again.\n')	
 		continue
 
 ############# ask user about which files he wants to zip #############
@@ -190,7 +183,7 @@ while True:
 		withOrWithoutExt = False
 		logFile.write('Program will archive files without users\' extentions\n')
 	else:
-		print('Input error. You should type only 1 or 2. Try again.')
+		prlog('Input error. You should type only 1 or 2. Try again.')
 		continue
 
 	#get list of extention to sort by from user
@@ -212,8 +205,7 @@ while True:
 	logFile.write('\nPlease type here path to store archive: ' + folderToStoreArchive + '\n')
 	
 	if re.search(r'^([a-zA-Z]\:\\)', folderToStoreArchive) == None:
-		print('Error: it should be an absolute path which starts with something like C:\\. Try again.\n')
-		logFile.write('Error: it should be an absolute path which starts with something like C:\\. Try again\n')
+		prlog('Error: it should be an absolute path which starts with something like C:\\. Try again.\n')
 		continue
 	elif os.path.exists(folderToStoreArchive):
 		print('Tnahk you.\n')
@@ -231,26 +223,26 @@ while True:
 	archiveName = input('Stage 5: Please write down name of archive. For example MyArchive: ')
 	logFile.write('\nStage 5: Please write down name of archive. For example MyArchive: ' + archiveName + '\n')
 	if re.search(r'[\%\#\&\{\}\\\<\>\*\?\/\$!\'\":@\+`|=]', archiveName) != None:
-		print('Error: ' + archiveName + ' contains forbidden charachters. Choose another name.\n')
-		logFile.write('Error: ' + archiveName + ' contains forbidden charachters. Choose another name\n')
+		prlog('Error: ' + archiveName + ' contains forbidden charachters. Choose another name.\n')
 		continue
 	elif os.path.exists(os.path.join(folderToStoreArchive, archiveName + '.zip')):
-		print('Error: archive with this name already exists in this directory')
-		logFile.write('Error: archive with this name already exists in this directory\n')
+		prlog('Error: archive with this name already exists in this directory')
 		continue
 	else:
-		print('Thank you. Path to archive is: ' + os.path.join(folderToStoreArchive, archiveName + '.zip\n'))
-		logFile.write('Thank you. Path to archive is: ' + os.path.join(folderToStoreArchive, archiveName + '.zip') + '\n\n')
+		prlog('Thank you. Path to archive is: ' + os.path.join(folderToStoreArchive, archiveName + '.zip\n'))
 		break
 
 pathToStoreArchive = os.path.join(folderToStoreArchive, archiveName + '.zip')
 
 ##############################################################################
 
-print('Start to zip files')
+prlog('Start to zip files')
 zipFiles(filesToArchive, pathToStoreArchive)
 
 
 print('\nEnd of code. It was nice to see you. Take care.')
 logFile.write('Program has reached end. Auf Wiederluge!')
 logFile.close()	
+
+
+#260
