@@ -14,7 +14,6 @@ def printGrid(number):
 		logFile.write('##############################################################\n')
 
 def lookingForFiles(pathToSearch):
-	logFile.write('There are these files in: ' + pathToSearch + '\n')
 	allFiles = []
 	totalSize = 0
 	for folderName, subfolders, fileNames in os.walk(pathToSearch):
@@ -32,7 +31,6 @@ def lookingForFiles(pathToSearch):
 					#We need to use \\?\ before path that is more than 260 symbols otherwise we get an error
 				totalSize += size
 				allFiles.append(os.path.join(folderName, file))
-				logFile.write(os.path.join(folderName, file) + '\n')
 
 	if len(allFiles) == 0: 
 		return 0			
