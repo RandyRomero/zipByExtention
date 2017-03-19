@@ -57,6 +57,7 @@ def countAndPrintSorted(filesToCount, withOrWithoutWord):
 	logFile.write('\n')
 	printGrid(1)	
 	prlog('There are ' + str(len(filesToCount)) + ' files ' + withOrWithoutWord + ' your extentions with total size of ' + str('%0.2f' % (totalSize / 1024 / 1024)) + ' MB.')
+	printGrid(1)
 	prlog('')
 
 def addExt():
